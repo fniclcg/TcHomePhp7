@@ -92,8 +92,8 @@ if($authorid!='' && !$isEmpty){
 	$res=mysqli_query($db,$sql) or die(mysqli_error($db));
 	
 	
-	if(mysql_insert_id($db)>0){
-		$articleid = mysql_insert_id($db);
+	if(mysqli_insert_id($db)>0){
+		$articleid = mysqli_insert_id($db);
 		if(intval($type)==101);
 		else if(intval($type)==102);
 		else if(intval($type)==103);

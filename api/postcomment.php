@@ -31,7 +31,7 @@ if($articleid!="" && $text!="" && $uid!=""){
 	$now=time();
 	$sql = "insert into `".getTablePrefix()."_comment` (articleid,authorid, createdate, text,replyid) values('$articleid', '$uid', '$now','$text','$replyid')";
 	$res=mysqli_query($db,$sql) or die(mysqli_error($db));
-	$commentid=mysqli_insert_id();
+	$commentid=mysqli_insert_id($db);
 
 	addCoinHistory(2,1,"发表评论");
 
@@ -57,7 +57,7 @@ if($articleid!="" && $text!="" && $uid!=""){
 	{
 		$now=time();
 		$sql = "UPDATE ".getTablePrefix()."_articles set updatetime='$now' where `id` = '$articleid' LIMIT 1";
-		$res=mysql_query($sql,$db) or die(mysqli_error($db));
+		$res=mysqli_query($db,$sql) or die(mysqli_error($db));
 	}
 
 	exitJson(0,'评论已发布',array('commentid'=>$commentid));

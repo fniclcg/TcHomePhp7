@@ -30,7 +30,7 @@ if($headimg!="" && $openid!="" && $nickname!=""){
 	$res=mysqli_query($db,$sql) or die(mysqli_error($db));
 
 	$now = time();
-	if(mysql_num_rows($res)<=0){
+	if(mysqli_num_rows($res)<=0){
 		$sql = "insert into `".getTablePrefix()."_members` (openid, nickname, headimg, gender, city,province,country,joindate,lastlogin) values('$openid', '$nickname', '$headimg' ,'$gender' ,'$city' ,'$province', '$country','$now','$now')";
 		mysqli_query($db,$sql) or die(mysqli_error($db));
 	}else{
