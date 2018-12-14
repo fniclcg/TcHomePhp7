@@ -10,7 +10,7 @@ Page({
     result:[],
     isowner:false,
     commentstr:'',
-    replyid: '',
+    replyid: 0,
     replyprefix: '',
     canloadmore: false,
     page: 0,
