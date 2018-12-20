@@ -16,6 +16,10 @@ $gpsaddr=$jsondata->gpsaddr;
 $gpscity=$jsondata->gpscity;
 $token=$jsondata->token;
 
+//默认值 2018年12月20日 add
+$price=0;
+$exchangeprice=0;
+$exchangecoin=0;
 
 $text = textFilter($text);
 
@@ -78,10 +82,6 @@ if($authorid!='' && !$isEmpty){
 		$title=$jsondata->title;
 		$title = textFilter($title);
 		$articleid=$jsondata->articleid;
-		//2018年12月20日 add
-		$price=0;
-		$exchangeprice=0;
-		$exchangecoin=0;
 		if($articleid!=""){
 			$sql = "update `".getTablePrefix()."_articles` set text='$text',createdate='$now', gps='$gps',gpsaddr='$gpsaddr',gpscity='$gpscity',`title`='$title',`price`=$price,telephone='$telephone',`unit`='$unit',exchangecoin=$exchangecoin,exchangeprice=$exchangeprice,exchangedesc='$exchangedesc' where `id`='$articleid' ";
 		}else{
