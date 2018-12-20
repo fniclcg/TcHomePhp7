@@ -243,20 +243,23 @@ Page({
         if (parseInt(res.data.err) == 0) {
           var billboardlist = res.data.result.billboardlist;
 
-          for (var i = 0; i < billboardlist.length; i++) {
-            billboardlist[i].timedistance = util.getTimeDistance(billboardlist[i].createdate);
+          //2018年12月20日 licg add
+          if(billboardlist && billboardlist.length>0) {
+            for (var i = 0; i < billboardlist.length; i++) {
+              billboardlist[i].timedistance = util.getTimeDistance(billboardlist[i].createdate);
+            }
+  
+            wx.getStorage({
+              key: 'noticereaded',
+              success: function (res) {
+                if (res.data != billboardlist[0].id) {
+                  that.setData({
+                    noticereaded: false
+                  });
+                }
+              },
+            })
           }
-
-          wx.getStorage({
-            key: 'noticereaded',
-            success: function (res) {
-              if (res.data != billboardlist[0].id) {
-                that.setData({
-                  noticereaded: false
-                });
-              }
-            },
-          })
 
           var nowweather = res.data.result.weather.data;
           nowweather.date = new Date().getFullYear() + "." + (new Date().getMonth()+1)+"."+new Date().getDate();
