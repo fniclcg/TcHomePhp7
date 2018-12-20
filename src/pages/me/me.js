@@ -599,7 +599,7 @@ Page({
             mode: res.data.result.mode,
             // list: list,
             areaIndex:res.data.result.userInfo.area,
-            relation:res.data.result.relation
+            //relation:res.data.result.relation
           });
         }
       }
