@@ -42,7 +42,7 @@ $uid=$_SESSION['openid'];
 if($uid!="" && $session_key!="" && $iv!="" && $encrypteddata!=""){
 	$pc = new WXBizDataCrypt($appid, $session_key);
 	$errCode = $pc->decryptData($encrypteddata, $iv, $data );
-	// echo $data."\n";
+	//echo $data."\n";
 	$output = iconv('gbk', 'utf8', $data);
 
 	// $stepcount=$data['stepInfoList;

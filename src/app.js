@@ -7,7 +7,7 @@ App({
     return 1008;
   },
   getAppName:function(){
-    return "tcfirst";
+    return "天长之家";
   },
   CDNUrl:function(){
     return "http://118.184.219.119:8080";
