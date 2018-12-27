@@ -121,6 +121,7 @@ Page({
               token: app.globalData.token
             },
             success:function(res){
+              debugger
               if(parseInt(res.data.err)==0){
                 if (that.data.files.length > 0) {
                   that.startUploadImage(res.data.result.articleid, that.data.files, function(){
