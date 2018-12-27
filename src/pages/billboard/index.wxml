@@ -39,8 +39,8 @@
         </wx:if>
         </view>
       </view> -->
-
-      <view id='{{billboardlist[0].id}}' bindtap="btnHistory" style="width:100%;background:#fff;padding:10px 10px;margin-bottom:10px;margin-top:10px;">
+      <image src="../../images/topbanner.jpg" style='height:200px;width:100%'></image>
+      <view id='{{billboardlist[0].id}}' bindtap="btnHistory" style="width:100%;background:#fff;padding:10px 10px;margin-bottom:10px;">
         <view style="font-size:14px;">
           <text style="font-weight:bold;">[公告]{{billboardlist[0].title}}</text>
           <view><text style="font-size:11px;color:#999;">{{billboardlist[0].createdate}}</text></view>
