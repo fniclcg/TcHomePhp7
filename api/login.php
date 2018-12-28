@@ -42,11 +42,16 @@ if($headimg!="" && $openid!="" && $nickname!=""){
 		mysqli_query($db,$sql) or die(mysqli_error($db));
 	}
 
+	$userInfo = getUserInfo($openid);
+
 	$token = getToken();
 	session_start();
 	$_SESSION['token'] = $token;
 	$_SESSION['openid'] = $openid;
-	exitJson(0, '',array('token'=>$_SESSION['token'],'sessionid'=>session_id())+getUserInfo($openid));
+	$_SESSION['houseid'] = $userInfo['houseid'];
+	var_dump($userInfo['houseid']);
+
+	exitJson(0, '',array('token'=>$_SESSION['token'],'sessionid'=>session_id())+$userInfo);
 }else{
 	exitJson(2, '登录失败，请授权获得昵称和头像');
 }

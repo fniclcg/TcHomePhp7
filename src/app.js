@@ -105,6 +105,7 @@ App({
       method:'POST',
       data:obj,
       success:function(res){
+        console.log(res);
         if(parseInt(res.data.err)==0){
           if(cb)cb(res.data.result);
         }else{
@@ -117,6 +118,7 @@ App({
     })
   },
   getUserInfo:function(cb){
+    debugger
     var that = this
     if(this.globalData.userInfo.islogin){
       typeof cb == "function" && cb(this.globalData.userInfo)

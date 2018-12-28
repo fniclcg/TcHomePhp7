@@ -58,7 +58,8 @@ function addCoinHistory($type,$value,$msg,$touid=''){
 
 function getUserSimpleInfo($openid){
 	$db = getDb();
-	$sql = "select `nickname`,`headimg`,`slogan`,`type`,`openid`,`joindate`,`lastlogin`,`wechatid`,`mobile`,`qq`,`coin` from ".getTablePrefix()."_members where openid = '$openid' LIMIT 1";
+	//$sql = "select `nickname`,`headimg`,`slogan`,`type`,`openid`,`joindate`,`lastlogin`,`wechatid`,`mobile`,`qq`,`coin` from ".getTablePrefix()."_members where openid = '$openid' LIMIT 1";
+	$sql = "select a.`nickname`,a.`headimg`,a.`slogan`,a.`type`,a.`openid`,a.`joindate`,a.`lastlogin`,a.`wechatid`,a.`mobile`,a.`qq`,a.`coin`,b.`name` as `housename` from ".getTablePrefix()."_members a,".getTablePrefix()."_house b where a.houseid=b.id and a.openid = '$openid' LIMIT 1";
 	$res=mysqli_query($db,$sql) or die(mysqli_error($db));
 
 	$row = mysqli_fetch_assoc($res);

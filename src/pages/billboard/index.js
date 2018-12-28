@@ -261,67 +261,6 @@ Page({
             })
           }
 
-          var nowweather = res.data.result.weather.data;
-          nowweather.date = new Date().getFullYear() + "." + (new Date().getMonth()+1)+"."+new Date().getDate();
-          nowweather.aqibgcolor = "#fff";
-          nowweather.aqitextcolor = "#000";
-          if (nowweather.aqi > 0 && nowweather.aqi <= 50) {
-            nowweather.aqistr = "良好，适宜开窗换气";
-            nowweather.aqibgcolor = "#fff";
-            nowweather.aqitextcolor = "#000";
-          }
-          else if (nowweather.aqi > 50 && nowweather.aqi <= 100) {          
-            nowweather.aqistr = "中等，可以开窗换气"; 
-            nowweather.aqibgcolor = "#fffd38";
-            nowweather.aqitextcolor = "#000";
-          }
-          else if (nowweather.aqi > 100 && nowweather.aqi <= 150) { 
-            nowweather.aqistr = "对敏感人群不健康"; 
-            nowweather.aqibgcolor = "#fd7e23";
-            nowweather.aqitextcolor = "#000";
-            }
-          else if (nowweather.aqi > 150 && nowweather.aqi <= 200) {
-            nowweather.aqistr = "轻度污染，减少户外活动";
-            nowweather.aqibgcolor = "#fb0d1b";
-            nowweather.aqitextcolor = "#fff";
-          }
-          else if (nowweather.aqi > 200 && nowweather.aqi <= 300) {
-             nowweather.aqistr = "有毒害，请做好防护"; 
-             nowweather.aqibgcolor = "#666";
-             nowweather.aqitextcolor = "#fff";
-             }
-          else if (nowweather.aqi > 300) {
-            nowweather.aqistr = "严重污染，不建议出门";
-            nowweather.aqibgcolor = "#000";
-            nowweather.aqitextcolor = "#fff";
-          }
-
-
-          var weather = res.data.result.weather.data.forecast;
-          console.log(res.data.result.weather.data);
-
-          weather.splice(3, 2);
-
-          var now_arr = res.data.result.now.split("-");
-          var nextMonth = now_arr[1];
-          if (nextMonth > 12) nextMonth = 1;
-
-          for (var i = 0; i < weather.length; i++) {
-            var dtarr = weather[i].date.split("日星期");
-            //weather[i].date = dtarr[0] + "日星期";
-            if (dtarr[1] == "天") dtarr[1] = "日";
-
-            weather[i].high = weather[i].high.split(" ")[1];
-            weather[i].low = weather[i].low.split(" ")[1];
-            var wdarr = weather[i].high.split(" ");
-            if (i == 0) {
-              // weather[i].date = weather[i].nongli;
-              weather[i].week = "今天";
-            } else {
-              weather[i].week = "周" + dtarr[1];
-            }
-          }
-
           // var list = res.data.result.newtopics;
           // for (var i = 0; i < list.length; i++) {
           //   for(var item in list[i].pics){
@@ -356,10 +295,7 @@ Page({
             //newcomments: newcomments,
             topbanner: res.data.result.topbanner,
             totalmembers: res.data.result.totalmembers,
-            xianhao: res.data.result.xianhao,
             billboardlist: billboardlist,
-            nowweather: nowweather,
-            weather: weather,
             loginlist: res.data.result.loginlist
           });
 
@@ -368,27 +304,7 @@ Page({
       }
     });
   },
-  btnWelcomeCopy: function (e) {
-    var that = this;
 
-    var now = new Date();
-    var welcome = "";
-    var weather = that.data.result.weather;
-    console.log(weather);
-    if (now.getHours() < 12) {
-      welcome = "各位邻居早上好，今天是" + weather.data.forecast[0].date + "，尾号" + that.data.xianhao[0] + "。天气" + weather.data.forecast[0].type + "，最高" + weather.data.forecast[0].high + "，最低" + weather.data.forecast[0].low + "，" + weather.data.forecast[0].fengxiang + weather.data.forecast[0].fengli.replace("<![CDATA[", "").replace("]]>", "") + "。" + weather.data.ganmao;
-    } else {
-      welcome = "各位邻居晚上好，明天是" + weather.data.forecast[1].date + "，尾号" + that.data.xianhao[1] + "。天气" + weather.data.forecast[1].type + "，最高" + weather.data.forecast[1].high + "，最低" + weather.data.forecast[1].low + "，" + weather.data.forecast[1].fengxiang + weather.data.forecast[1].fengli.replace("<![CDATA[", "").replace("]]>", "") + "。" + weather.data.ganmao;
-    }
-    wx.setClipboardData({
-      data: welcome,
-    })
-    wx.showModal({
-      title: '',
-      showCancel: false,
-      content: '请安语已成功复制，可前往邻居群粘贴'
-    })
-  },
   btnHistory: function (e) {
     wx.setStorage({
       key: 'noticereaded',

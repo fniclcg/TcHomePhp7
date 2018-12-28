@@ -11,21 +11,6 @@ $postdata=file_get_contents("php://input");
 
 $jsondata=json_decode($postdata);
 
-function getNewWeather(){
-	
-	$dataRes = gzdecode(file_get_contents("http://wthrcdn.etouch.cn/weather_mini?citykey=101010100"));
-	// $xml_array=simplexml_load_string($dataRes);
-	$json = json_decode($dataRes,true);
-
-	// print_r($json);
-
-	// $weather=$json['forecast'];
-	// echo $json['forecast'];
-
-	// file_put_contents('../weathercached/weather.json', json_encode($weather,JSON_UNESCAPED_UNICODE));
-	return  $json;
-}
-
 function getXHNumber($tDate,$sDate) {
 	// return $tDate .'-'. $sDate;
     $nDayNum = date('w', $tDate) == 0 ? 7 : date('w', $tDate);
@@ -37,50 +22,6 @@ function getXHNumber($tDate,$sDate) {
     return $nDayNum;
 }
 
-function getXianhaoArray($tDate){
-	$xianhao=array();
-	$xianhao[]='5,0限行';
-    $xianhao[]= '1,6限行';
-    $xianhao[]= '2,7限行';
-    $xianhao[]= '3,8限行';
-    $xianhao[]= '4,9限行';
-    $xianhao[]= '不限行';
-    $xianhao[]= '不限行';
-
-    // $tNum=getXHNumber($tDate);
-
-    $newarr=array();
-    for ($i=0; $i <5; $i++) { 
-    	# code...
-    	// $nNum=getXHNumber();
-    	// $newarr[]=getXHNumber(strtotime(date('Y-m-d')),strtotime('2014-04-14'));
-    	$newarr[]=$xianhao[getXHNumber(strtotime('+'.$i.' day'),strtotime('2014-04-14'))-1];
-    }
-
-    // $subset = array_slice($xianhao, $tNum+1);  
-
-    // $newarr=array_merge($subset,$xianhao);
-
-    return $newarr;
-}
-
-// $weather_json=file_get_contents('../weathercached/weather.json');
-// if($weather_json){
-// 	$weather=json_decode($weather_json,true);
-
-// 	// echo $weather['realtime']['date']."<br/>";
-// 	// echo date("Y-m-d")."<br/>";
-// 	if($weather['realtime']['date']==strtotime(date("Y-m-d"))){
-// 	 	// echo "不更新";
-// 	}else{
-// 		// echo "要更新";
-// 		$weather=getNewWeather();
-// 	}
-// }else{
-// 	$weather=getNewWeather();
-// }
-// exit();
-$weather=getNewWeather();
 $now=date('Y-m-d');
 
 $db = getDb();
@@ -106,25 +47,6 @@ while ($row = mysqli_fetch_assoc($res)) {
 		'text'=>$row['text']
 	);
 }
-
-
-$newtopics=array();
-
-$sql = "select * from ".getTablePrefix()."_articles where `type` <99 and deleted=0 order by updatetime desc,createdate desc LIMIT 9";
-$res=mysqli_query($db,$sql) or die(mysqli_error($db));
-
-while ($row = mysqli_fetch_assoc($res)) {
-
-    $item=parseArticleSimpleItem($row);
-
-    if(count($item['vids'])>0)$item['text']='[视频]'.$item['text'];
-
-    $item['text']=mb_substr($item['text'], 0,60,"UTF-8");
-    if(mb_strlen($item['text'],"UTF-8")>=60)$item['text']=$item['text']."...";
-
-    $newtopics[]=$item;
-}
-
 
 $newgoods=array();
 
@@ -219,7 +141,7 @@ if(!isDitributionMode($jsondata->bv)){
     );
 }
 
-exitJson(0,"",array("fastnavpagecount"=>8,"now"=>$now,"topbanner"=>$topbanner,"fastnav"=>$fastnav,"newgoods"=>$newgoods,"newvotes"=>$newvotes,"xianhao"=>getXianhaoArray(strtotime($now)),"totalmembers"=>getTotalMemberCount(),"weather"=>$weather,"loginlist"=>$loginlist,"billboardlist"=>$billboardlist,"newtopics"=>$newtopics));
+exitJson(0,"",array("fastnavpagecount"=>8,"now"=>$now,"topbanner"=>$topbanner,"fastnav"=>$fastnav,"newgoods"=>$newgoods,"newvotes"=>$newvotes,"totalmembers"=>getTotalMemberCount(),"loginlist"=>$loginlist,"billboardlist"=>$billboardlist));
 
 
 ?>

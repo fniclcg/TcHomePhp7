@@ -99,6 +99,7 @@
         <view class="weui-flex__item" style="margin-left:10px;">
           <view style="font-size:14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
             {{authorInfo.nickname}}
+            <text style="color:#ccc;font-size:10px"> • {{authorInfo.housename}}</text>
           </view>
         </view>
         <view wx:if="{{commentcount>=5}}" style='line-height:14px;'>

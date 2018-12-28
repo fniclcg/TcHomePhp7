@@ -22,6 +22,7 @@ if(!isDitributionMode($jsondata->bv)){
 }
 
 $uid=$_SESSION['openid'];
+$houseid=1;
 
 $page=0;
 if($jsondata->page!=""){
@@ -30,13 +31,30 @@ if($jsondata->page!=""){
 $limit=9;
 
 $db = getDb();
-$sql = "select * from ".getTablePrefix()."_articles where `type` = $type and deleted=0 order by updatetime desc,createdate desc LIMIT ".$limit*$page.",$limit";
+//$sql = "select * from ".getTablePrefix()."_articles where `type` = $type and deleted=0 order by updatetime desc,createdate desc LIMIT ".$limit*$page.",$limit";
+$sql = "select a.* 
+		from ".getTablePrefix()."_articles a left join ".getTablePrefix()."_members b on a.authorid=b.openid
+		where a.`type`=$type and a.deleted=0 
+		order by 
+			case 
+			when b.houseid = $houseid then 0
+			else 1 end
+			asc, 
+		a.updatetime desc,a.createdate desc LIMIT ".$limit*$page.",$limit";
 if($jsondata->uid!=""){
 	$uid=$jsondata->uid;
 	$sql = "select * from ".getTablePrefix()."_articles where `type` <99 and authorid='$uid' and deleted=0 and masked=0 order by updatetime desc,createdate desc LIMIT ".$limit*$page.",$limit";
 }else if($type==""){
-	$sql = "select * from ".getTablePrefix()."_articles where `type` <99 and `type` !=8 and deleted=0 order by updatetime desc,createdate desc LIMIT ".$limit*$page.",$limit";
+	$sql = "select a.* 
+			from ".getTablePrefix()."_articles a left join ".getTablePrefix()."_members b on a.authorid=b.openid
+			where a.`type` <99 and a.`type` !=8 and a.deleted=0 
+			order by 
+				case when b.houseid = $houseid then 0
+				else 1 end
+				asc, 
+			a.updatetime desc,a.createdate desc LIMIT ".$limit*$page.",$limit";
 }
+var_dump($sql);
 $res=mysqli_query($db,$sql) or die(mysqli_error($db));
 
 
