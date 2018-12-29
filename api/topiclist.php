@@ -54,7 +54,6 @@ if($jsondata->uid!=""){
 				asc, 
 			a.updatetime desc,a.createdate desc LIMIT ".$limit*$page.",$limit";
 }
-var_dump($sql);
 $res=mysqli_query($db,$sql) or die(mysqli_error($db));
 
 

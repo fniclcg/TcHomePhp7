@@ -49,7 +49,7 @@ if($headimg!="" && $openid!="" && $nickname!=""){
 	$_SESSION['token'] = $token;
 	$_SESSION['openid'] = $openid;
 	$_SESSION['houseid'] = $userInfo['houseid'];
-	var_dump($userInfo['houseid']);
+	//var_dump($userInfo['houseid']);
 
 	exitJson(0, '',array('token'=>$_SESSION['token'],'sessionid'=>session_id())+$userInfo);
 }else{

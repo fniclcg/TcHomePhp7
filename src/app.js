@@ -118,7 +118,6 @@ App({
     })
   },
   getUserInfo:function(cb){
-    debugger
     var that = this
     if(this.globalData.userInfo.islogin){
       typeof cb == "function" && cb(this.globalData.userInfo)
