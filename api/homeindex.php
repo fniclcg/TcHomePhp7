@@ -35,7 +35,10 @@ while ($row = mysqli_fetch_assoc($res)) {
 	$loginlist[] = getUserSimpleInfo($row['openid']);
 }
 
-$sql = "select * from ".getTablePrefix()."_articles where `type` = 99 order by createdate desc LIMIT 1";
+session_start();
+$houseid=$_SESSION['houseid'];
+
+$sql = "select a.* from ".getTablePrefix()."_articles a left join ".getTablePrefix()."_members b on a.authorid=b.openid where a.`type` = 99 order by a.createdate desc LIMIT 1";
 $res=mysqli_query($db,$sql) or die(mysqli_error($db));
 
 $billboardlist = array();

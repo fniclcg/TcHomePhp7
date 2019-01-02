@@ -14,8 +14,11 @@ $jsondata=json_decode($postdata);
 $page=0;
 $limit=10;
 
+session_start();
+$houseid=$_SESSION['houseid'];
+
 $db = getDb();
-$sql = "select * from ".getTablePrefix()."_articles where `type` = 99 order by createdate desc LIMIT ".$limit*$page.",$limit";
+$sql = "select a.* from ".getTablePrefix()."_articles a left join ".getTablePrefix()."_members b on a.authorid=b.openid where b.houseid=$houseid and a.`type` = 99 order by a.createdate desc LIMIT ".$limit*$page.",$limit";
 $res=mysqli_query($db, $sql) or die(mysqli_error($db));
 
 $list = array();

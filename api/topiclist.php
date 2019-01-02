@@ -22,7 +22,7 @@ if(!isDitributionMode($jsondata->bv)){
 }
 
 $uid=$_SESSION['openid'];
-$houseid=1;
+$houseid=$_SESSION['houseid'];
 
 $page=0;
 if($jsondata->page!=""){

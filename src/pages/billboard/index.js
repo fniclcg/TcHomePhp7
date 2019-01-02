@@ -220,6 +220,7 @@ Page({
     })
   },
   updateBillBoard: function () {
+    console.log("[app.globalData]", app.globalData)
     var that = this;
     wx.showLoading({
       title: '请求中',
@@ -371,7 +372,9 @@ Page({
         url: '/pages/webview/index?url=' + escape(options.url),
       })
     }
+
     this.updateBillBoard();
+
   },
 
   /**
