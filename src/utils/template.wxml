@@ -92,22 +92,53 @@
 <template name='articleitem-navitem'>
   <navigator url="/pages/forum/detail?topicid={{id}}">
     <view style="background:#fff;padding:0px 10px;padding-top:10px;width:100%;">
-      <view class="weui-flex" style="width:100%;">
-        <view style="height:20px;">
-          <image lazy-load='true' src="{{authorInfo.headimg}}" style="width:20px;height:20px;border:#f2f2f2 1px solid;border-radius:10px;"></image>
-        </view>
-        <view class="weui-flex__item" style="margin-left:10px;">
-          <view style="font-size:14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
-            {{authorInfo.nickname}}
-            <text style="color:#ccc;font-size:10px"> • {{authorInfo.housename}}</text>
+      <view class="weui-flex" style="justify-content:flex-start;align-items:flex-start;">
+        <image lazy-load='true' src="{{authorInfo.headimg}}" style="width:35px;height:35px;border:#f2f2f2 1px solid;border-radius:5px;"></image>
+        <view class="weui-flex__item" style="margin-left:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;align-items:center;">
+          <text style="font-size:14px;color:#576490;font-weight:600;">{{authorInfo.nickname}}</text>
+          <text style="color:#ccc;font-size:9px">  • {{authorInfo.housename}}</text>
+
+          <view style="padding-top:5px;background:#fff;border-bottom:#f2f2f2 1px solid;margin-bottom:0px;font-size:12px;">
+            <view class='weui-flex'>
+              <view wx:if="{{pics.length==1}}" style="width:78px;height:78px;margin-right:5px;margin-bottom:5px;">
+                <image lazy-load='true' mode="aspectFill" src="{{pics[0]}}" style="width:78px;height:78px;"></image>
+              </view>
+              <view class='weui-flex__item' style="padding:5px 0px;font-size:14px;max-height:80px;overflow:hidden;text-overflow:ellipsis;">{{text}}</view>
+      
+            </view>
+            <view wx:if="{{pics.length>1}}" class="weui-flex" style='width:100%;overflow:hidden;'>
+              <block wx:for="{{pics.length>3?[pics[0],pics[1],pics[2]]:pics}}" wx:for-index="imgindex">
+                <view style="width:78px;height:78px;margin-right:2px;margin-bottom:5px;">
+                  <image lazy-load='true' mode="aspectFill" src="{{item}}" style="width:78px;height:78px;"></image>
+                </view>
+              </block>
+            </view>
+            <view wx:if="{{gps!=''}}" style="font-size:12px;color:#3498DB;width:100%;text-overflow:ellipsis;white-space:nowrap; overflow:hidden;">
+              {{gpscity}}{{gpscity==''?'':'·'}}{{gpsaddr}}
+            </view>
+            <view class='weui-flex' style="width:100%;height:35px;padding:0px 0px;line-height:30px;display:flex;color:#ccc;font-size:12px;">
+              <view style="width:50%;">
+                <text>发布于{{timedistance}}</text>
+              </view>
+              <view style="width:50%;">
+                <view id='tl_{{index}}' style="float:right;">
+                  <text wx:if="{{viewcount}}" class="iconfont icon-browse"></text> {{viewcount}}
+                </view>
+                <view id='tl_{{index}}' style="float:right;margin-right:20px;">
+                  <text class="iconfont icon-message"></text>
+                  <text wx:if="{{commentcount>0}}">{{commentcount}}</text>
+                </view>
+              </view>
+            </view>
           </view>
+
         </view>
         <view wx:if="{{commentcount>=5}}" style='line-height:14px;'>
           <text style='font-size:10px;padding:4px;background:#ff0000;color:#fff;'>热门</text>
         </view>
       </view>
     </view>
-    <view style="width:100%;padding:0px 10px;padding-top:5px;background:#fff;border-bottom:#f2f2f2 1px solid;margin-bottom:0px;font-size:12px;">
+    <!-- <view style="width:100%;padding:0px 10px;padding-top:5px;background:#fff;border-bottom:#f2f2f2 1px solid;margin-bottom:0px;font-size:12px;">
       <view class='weui-flex'>
         <view wx:if="{{pics.length==1}}" style="width:79px;height:79px;margin-right:5px;margin-bottom:5px;">
           <image lazy-load='true' mode="aspectFill" src="{{pics[0]}}" style="width:79px;height:79px;"></image>
@@ -139,7 +170,7 @@
           </view>
         </view>
       </view>
-    </view>
+    </view> -->
   </navigator>
 </template>
 

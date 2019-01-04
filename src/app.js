@@ -155,7 +155,8 @@ App({
   },
   globalData:{
     userInfo:{
-      islogin:false
+      islogin:false,
+      tt: "test"
     }
   }
 })
